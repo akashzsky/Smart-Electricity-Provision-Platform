@@ -80,6 +80,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -198,14 +200,59 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Finance.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Job.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobStatu.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Market_Participant.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Product.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SmpModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmpModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SmpModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SmpModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmpModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="UserAddress.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserProfile.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRole.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkType.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -231,6 +278,16 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="SmpModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SmpModel.edmx</DependentUpon>
+      <LastGenOutput>SmpModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SmpModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SmpModel.edmx</DependentUpon>
+      <LastGenOutput>SmpModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -265,6 +322,13 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <EntityDeploy Include="SmpModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SmpModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="SmpModel.edmx.diagram">
+      <DependentUpon>SmpModel.edmx</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -276,6 +340,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
