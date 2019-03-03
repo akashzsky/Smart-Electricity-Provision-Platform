@@ -10,7 +10,14 @@ namespace SMP_WebApplication.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            ViewBag.index = "homeIndex";
+            HttpCookie c = Request.Cookies["Username"];
+            if (c != null)
+            {
+                return RedirectToAction("welcome", "Customer");
+            }
+            else
+                return View();
         }
 
         public ActionResult About()

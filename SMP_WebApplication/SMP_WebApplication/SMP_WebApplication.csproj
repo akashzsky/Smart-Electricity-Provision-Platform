@@ -275,6 +275,7 @@
     </Content>
     <Content Include="Databases\DB Model.xlsx" />
     <Content Include="Databases\SMP.bacpac" />
+    <Content Include="Databases\CustomerPrototype.bacpac" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -321,6 +322,11 @@
     <Content Include="Views\Customer\Welcome.cshtml" />
     <Content Include="Views\Customer\Helpdesk.cshtml" />
     <Content Include="Views\Customer\UserProfile.cshtml" />
+    <Content Include="Views\Customer\NewRequest.cshtml" />
+    <Content Include="Views\Customer\Status.cshtml" />
+    <Content Include="Views\Customer\Billing.cshtml" />
+    <Content Include="Views\Customer\Recharge.cshtml" />
+    <Content Include="Views\Customer\Signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

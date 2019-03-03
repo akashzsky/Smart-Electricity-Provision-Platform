@@ -18,8 +18,20 @@ namespace SMP_WebApplication.Controllers
                 return RedirectToAction("welcome");
             }
             else
-                return RedirectToAction("Index", "HomeController");
+                return RedirectToAction("Index", "Home");
             //return View();
+        }
+
+        public ActionResult Signup()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Signup(UserProfile user)
+        {
+            entities.UserProfiles.Add(user);
+            entities.SaveChanges();
+            return RedirectToAction("login");
         }
 
         public ActionResult Login()
@@ -86,6 +98,12 @@ namespace SMP_WebApplication.Controllers
 
         public ActionResult Welcome()
         {
+            HttpCookie c = Request.Cookies["Username"];
+            if (c == null)
+            {
+                return RedirectToAction("index");
+            }
+         
             return View();
         }
         public ActionResult Logout()
@@ -102,6 +120,27 @@ namespace SMP_WebApplication.Controllers
         public ActionResult Helpdesk()
         {
             
+            return View();
+        }
+        
+        public ActionResult NewRequest()
+        {
+
+            return View();
+        }
+        public ActionResult Status()
+        {
+
+            return View();
+        }
+        public ActionResult Billing()
+        {
+
+            return View();
+        }
+        public ActionResult Recharge()
+        {
+
             return View();
         }
 

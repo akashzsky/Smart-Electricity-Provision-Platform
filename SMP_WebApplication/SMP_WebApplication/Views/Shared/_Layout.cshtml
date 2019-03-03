@@ -13,12 +13,15 @@
 
     ViewBag.val2 = (ViewBag.val == null) ? "Login" : "#";
     ViewBag.val3 = (c != null) ? "Helpdesk" : "#";
-    ViewBag.val4 = (c != null) ? "New_Request" : "#";
-    ViewBag.val5 = (c != null) ? "Satus" : "#";
+    ViewBag.val4 = (c != null) ? "NewRequest" : "#";
+    ViewBag.val5 = (c != null) ? "Status" : "#";
     ViewBag.val6 = (c != null) ? "Billing" : "#";
     ViewBag.val7 = (c != null) ? "Recharge" : "#";
     ViewBag.val1 = (c != null) ? "Welcome" : "Login";
     ViewBag.UP = (c != null) ? "UserProfile" : "Login";
+    ViewBag.home = (c != null) ? "welcome" : "index";
+
+
 
     //For getting qty number in cart
 
@@ -62,7 +65,7 @@
 
 
                 <ul class="nav navbar-nav">
-                    <li><a style="color:#fa900e;font-size:medium" href="">Home</a></li>
+                    <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.home">Home</a></li>
                     <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val3">Help Desk</a></li>
                     <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val4">New Request</a></li>
                     <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val5">Status</a></li>
@@ -70,11 +73,28 @@
                     <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val7">Recharge</a></li>
                     
                 </ul>
+                @if (ViewBag.index != null)
+                {
+                    <ul class="navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <br />
+                            <a class="nav-link" style="color:#fa900e;font-size:medium;margin-top:.5rem" href="customer/login"> Hello,@ViewBag.user</a>
+                            
+                        </li>
+                    </ul>
+
+
+                        
+
+                 }
+                else
+                {
                 <ul class="nav navbar-nav navbar-right">
-                  
+
 
                     <li class="dropdown">
-                        <a style="color:#fa900e;font-size:medium" href=@ViewBag.val2 class="dropdown-toggle" data-toggle="dropdown">Hello,@ViewBag.user<br />Account <span class="caret"></span></a>
+                        <a style="color:#fa900e;font-size:medium;" href=@ViewBag.val2 class="dropdown-toggle" data-toggle="dropdown">Hello,@ViewBag.user<br />Account <span class="caret"></span></a>
+
                         <ul class="dropdown-menu">
                             <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.UP">Your Profile</a></li>
                             <li><a style="color:#fa900e;font-size:medium" href="#">Add Address</a></li>
@@ -88,8 +108,12 @@
                                 <li><a style="color:#fa900e;font-size:medium" href="~/Customer/login">Login</a></li>
                             }
                         </ul>
+
+
                     </li>
+
                 </ul>
+                }
 
             </div>
         </div>
