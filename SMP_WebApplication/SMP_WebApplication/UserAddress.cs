@@ -14,20 +14,14 @@ namespace SMP_WebApplication
     
     public partial class UserAddress
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserAddress()
-        {
-            this.UserProfiles = new HashSet<UserProfile>();
-        }
-    
         public long ID { get; set; }
         public string House { get; set; }
         public string Street { get; set; }
         public string Area { get; set; }
         public string State { get; set; }
         public long Pin { get; set; }
+        public long UserID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserProfile> UserProfiles { get; set; }
+        public virtual UserProfile UserProfile { get; set; }
     }
 }

@@ -4,14 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="13edda6ee4304cd3aad3dd26a63f2ecf" Name="Diagram1">
+      <Diagram DiagramId="13edda6ee4304cd3aad3dd26a63f2ecf" Name="Diagram1" ZoomLevel="83">
         <EntityTypeShape EntityType="SMPModel.Finance" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SMPModel.Job" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="SMPModel.JobStatu" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SMPModel.JobStatu" Width="1.5" PointX="2.25" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SMPModel.Market_Participant" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="SMPModel.Product" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SMPModel.Role" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SMPModel.UserProfile" Width="1.5" PointX="3" PointY="14.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SMPModel.UserRole" Width="1.5" PointX="5.25" PointY="12" IsExpanded="true" />
         <EntityTypeShape EntityType="SMPModel.WorkType" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
         <AssociationConnector Association="SMPModel.FK_Finance_WorkType" ManuallyRouted="false" />
@@ -19,15 +18,16 @@
         <AssociationConnector Association="SMPModel.FK_Job_JobStatus" ManuallyRouted="false" />
         <AssociationConnector Association="SMPModel.FK_Job_Market_Participant" ManuallyRouted="false" />
         <AssociationConnector Association="SMPModel.FK_Job_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="SMPModel.FK_Job_UserProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="SMPModel.FK_Job_UserProfile1" ManuallyRouted="false" />
         <AssociationConnector Association="SMPModel.FK_Job_WorkType" ManuallyRouted="false" />
         <AssociationConnector Association="SMPModel.FK_Market_Participant_Role" ManuallyRouted="false" />
         <AssociationConnector Association="SMPModel.FK_UserRoles_Roles" ManuallyRouted="false" />
-        <AssociationConnector Association="SMPModel.FK_UserRoles_UserProfile" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SMPModel.sysdiagram" Width="1.5" PointX="5.375" PointY="6.75" />
-        <EntityTypeShape EntityType="SMPModel.UserAddress" Width="1.5" PointX="0.75" PointY="14.875" />
-        <AssociationConnector Association="SMPModel.FK_UserProfile_UserAddress" />
+        <EntityTypeShape EntityType="SMPModel.UserAddress" Width="1.5" PointX="3" PointY="11.25" />
+        <EntityTypeShape EntityType="SMPModel.UserProfile" Width="1.5" PointX="0.75" PointY="5.875" />
+        <AssociationConnector Association="SMPModel.FK_Job_UserProfile_CoordinatorID_" />
+        <AssociationConnector Association="SMPModel.FK_Job_UserProfile_CUSTOMER_" />
+        <AssociationConnector Association="SMPModel.FK_UserAddress_UserProfile" />
+        <AssociationConnector Association="SMPModel.FK_UserRoles_UserProfile" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -75,6 +75,7 @@
           <Property Name="Area" Type="varchar(max)" Nullable="false" />
           <Property Name="State" Type="varchar(max)" Nullable="false" />
           <Property Name="Pin" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -88,7 +89,6 @@
           <Property Name="LastName" Type="varchar(max)" />
           <Property Name="PhoneNo" Type="bigint" Nullable="false" />
           <Property Name="DOB" Type="datetime" Nullable="false" />
-          <Property Name="AddressID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRoles">
           <Key>
@@ -165,19 +165,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Job_UserProfile">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
-          <End Role="Job" Type="Self.Job" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Job">
-              <PropertyRef Name="CusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Job_UserProfile1">
+        <Association Name="FK_Job_UserProfile(CoordinatorID)">
           <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
           <End Role="Job" Type="Self.Job" Multiplicity="*" />
           <ReferentialConstraint>
@@ -186,6 +174,18 @@
             </Principal>
             <Dependent Role="Job">
               <PropertyRef Name="CoordinatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_UserProfile(CUSTOMER)">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -213,15 +213,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserProfile_UserAddress">
-          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="1" />
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+        <Association Name="FK_UserAddress_UserProfile">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UserAddress">
+            <Principal Role="UserProfile">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="UserProfile">
-              <PropertyRef Name="AddressID" />
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -280,11 +280,11 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Job" EntitySet="Job" />
           </AssociationSet>
-          <AssociationSet Name="FK_Job_UserProfile" Association="Self.FK_Job_UserProfile">
+          <AssociationSet Name="FK_Job_UserProfile(CoordinatorID)" Association="Self.FK_Job_UserProfile(CoordinatorID)">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Job" EntitySet="Job" />
           </AssociationSet>
-          <AssociationSet Name="FK_Job_UserProfile1" Association="Self.FK_Job_UserProfile1">
+          <AssociationSet Name="FK_Job_UserProfile(CUSTOMER)" Association="Self.FK_Job_UserProfile(CUSTOMER)">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Job" EntitySet="Job" />
           </AssociationSet>
@@ -296,9 +296,9 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="Market_Participant" EntitySet="Market_Participant" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserProfile_UserAddress" Association="Self.FK_UserProfile_UserAddress">
-            <End Role="UserAddress" EntitySet="UserAddress" />
+          <AssociationSet Name="FK_UserAddress_UserProfile" Association="Self.FK_UserAddress_UserProfile">
             <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRoles_Roles" Association="Self.FK_UserRoles_Roles">
             <End Role="Role" EntitySet="Role" />
@@ -343,9 +343,9 @@
           <NavigationProperty Name="JobStatu" Relationship="Self.FK_Job_JobStatus" FromRole="Job" ToRole="JobStatus" />
           <NavigationProperty Name="Market_Participant" Relationship="Self.FK_Job_Market_Participant" FromRole="Job" ToRole="Market_Participant" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Job_Product" FromRole="Job" ToRole="Product" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK_Job_UserProfile" FromRole="Job" ToRole="UserProfile" />
-          <NavigationProperty Name="UserProfile1" Relationship="Self.FK_Job_UserProfile1" FromRole="Job" ToRole="UserProfile" />
           <NavigationProperty Name="WorkType" Relationship="Self.FK_Job_WorkType" FromRole="Job" ToRole="WorkType" />
+          <NavigationProperty Name="UserProfile" Relationship="SMPModel.FK_Job_UserProfile_CoordinatorID_" FromRole="Job" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile1" Relationship="SMPModel.FK_Job_UserProfile_CUSTOMER_" FromRole="Job" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="JobStatu">
           <Key>
@@ -388,24 +388,6 @@
           <NavigationProperty Name="Market_Participant" Relationship="Self.FK_Market_Participant_Role" FromRole="Role" ToRole="Market_Participant" />
           <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRoles_Roles" FromRole="Role" ToRole="UserRoles" />
         </EntityType>
-        <EntityType Name="UserProfile">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNo" Type="Int64" Nullable="false" />
-          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AddressID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Jobs" Relationship="Self.FK_Job_UserProfile" FromRole="UserProfile" ToRole="Job" />
-          <NavigationProperty Name="Jobs1" Relationship="Self.FK_Job_UserProfile1" FromRole="UserProfile" ToRole="Job" />
-          <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRoles_UserProfile" FromRole="UserProfile" ToRole="UserRoles" />
-          <NavigationProperty Name="UserAddress" Relationship="SMPModel.FK_UserProfile_UserAddress" FromRole="UserProfile" ToRole="UserAddress" />
-        </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="ID" />
@@ -414,7 +396,7 @@
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <Property Name="RoleID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="Self.FK_UserRoles_Roles" FromRole="UserRoles" ToRole="Role" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK_UserRoles_UserProfile" FromRole="UserRoles" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile" Relationship="SMPModel.FK_UserRoles_UserProfile" FromRole="UserRole" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="WorkType">
           <Key>
@@ -485,30 +467,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Job_UserProfile">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
-          <End Role="Job" Type="Self.Job" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Job">
-              <PropertyRef Name="CusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Job_UserProfile1">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
-          <End Role="Job" Type="Self.Job" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Job">
-              <PropertyRef Name="CoordinatorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Job_WorkType">
           <End Role="WorkType" Type="Self.WorkType" Multiplicity="1" />
           <End Role="Job" Type="Self.Job" Multiplicity="*" />
@@ -545,18 +503,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserRoles_UserProfile">
-          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
-          <End Role="UserRoles" Type="Self.UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfile">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserRoles">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="SMPEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Finances" EntityType="Self.Finance" />
           <EntitySet Name="Jobs" EntityType="Self.Job" />
@@ -564,7 +510,6 @@
           <EntitySet Name="Market_Participant" EntityType="Self.Market_Participant" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
-          <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
           <EntitySet Name="WorkTypes" EntityType="Self.WorkType" />
           <AssociationSet Name="FK_Finance_WorkType" Association="Self.FK_Finance_WorkType">
@@ -587,14 +532,6 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Job" EntitySet="Jobs" />
           </AssociationSet>
-          <AssociationSet Name="FK_Job_UserProfile" Association="Self.FK_Job_UserProfile">
-            <End Role="UserProfile" EntitySet="UserProfiles" />
-            <End Role="Job" EntitySet="Jobs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Job_UserProfile1" Association="Self.FK_Job_UserProfile1">
-            <End Role="UserProfile" EntitySet="UserProfiles" />
-            <End Role="Job" EntitySet="Jobs" />
-          </AssociationSet>
           <AssociationSet Name="FK_Job_WorkType" Association="Self.FK_Job_WorkType">
             <End Role="WorkType" EntitySet="WorkTypes" />
             <End Role="Job" EntitySet="Jobs" />
@@ -607,14 +544,23 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserRoles" EntitySet="UserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserRoles_UserProfile" Association="Self.FK_UserRoles_UserProfile">
-            <End Role="UserProfile" EntitySet="UserProfiles" />
-            <End Role="UserRoles" EntitySet="UserRoles" />
-          </AssociationSet>
           <EntitySet Name="UserAddresses" EntityType="SMPModel.UserAddress" />
-          <AssociationSet Name="FK_UserProfile_UserAddress" Association="SMPModel.FK_UserProfile_UserAddress">
-            <End Role="UserAddress" EntitySet="UserAddresses" />
+          <EntitySet Name="UserProfiles" EntityType="SMPModel.UserProfile" />
+          <AssociationSet Name="FK_Job_UserProfile_CoordinatorID_" Association="SMPModel.FK_Job_UserProfile_CoordinatorID_">
             <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_UserProfile_CUSTOMER_" Association="SMPModel.FK_Job_UserProfile_CUSTOMER_">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAddress_UserProfile" Association="SMPModel.FK_UserAddress_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="UserAddress" EntitySet="UserAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_UserProfile" Association="SMPModel.FK_UserRoles_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserAddress">
@@ -627,17 +573,71 @@
           <Property Name="Area" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="State" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Pin" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="UserProfiles" Relationship="SMPModel.FK_UserProfile_UserAddress" FromRole="UserAddress" ToRole="UserProfile" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="UserProfile" Relationship="SMPModel.FK_UserAddress_UserProfile" FromRole="UserAddress" ToRole="UserProfile" />
         </EntityType>
-        <Association Name="FK_UserProfile_UserAddress">
-          <End Type="SMPModel.UserAddress" Role="UserAddress" Multiplicity="1" />
-          <End Type="SMPModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="Int64" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Jobs" Relationship="SMPModel.FK_Job_UserProfile_CoordinatorID_" FromRole="UserProfile" ToRole="Job" />
+          <NavigationProperty Name="Jobs1" Relationship="SMPModel.FK_Job_UserProfile_CUSTOMER_" FromRole="UserProfile" ToRole="Job" />
+          <NavigationProperty Name="UserAddresses" Relationship="SMPModel.FK_UserAddress_UserProfile" FromRole="UserProfile" ToRole="UserAddress" />
+          <NavigationProperty Name="UserRoles" Relationship="SMPModel.FK_UserRoles_UserProfile" FromRole="UserProfile" ToRole="UserRole" />
+        </EntityType>
+        <Association Name="FK_Job_UserProfile_CoordinatorID_">
+          <End Type="SMPModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="SMPModel.Job" Role="Job" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="UserAddress">
+            <Principal Role="UserProfile">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="UserProfile">
-              <PropertyRef Name="AddressID" />
+            <Dependent Role="Job">
+              <PropertyRef Name="CoordinatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_UserProfile_CUSTOMER_">
+          <End Type="SMPModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="SMPModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAddress_UserProfile">
+          <End Type="SMPModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="SMPModel.UserAddress" Role="UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_UserProfile">
+          <End Type="SMPModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="SMPModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -713,21 +713,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserProfiles">
-            <EntityTypeMapping TypeName="SMPModel.UserProfile">
-              <MappingFragment StoreEntitySet="UserProfile">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserRoles">
             <EntityTypeMapping TypeName="SMPModel.UserRole">
               <MappingFragment StoreEntitySet="UserRoles">
@@ -748,11 +733,26 @@
           <EntitySetMapping Name="UserAddresses">
             <EntityTypeMapping TypeName="SMPModel.UserAddress">
               <MappingFragment StoreEntitySet="UserAddress">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Pin" ColumnName="Pin" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Area" ColumnName="Area" />
                 <ScalarProperty Name="Street" ColumnName="Street" />
                 <ScalarProperty Name="House" ColumnName="House" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="SMPModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

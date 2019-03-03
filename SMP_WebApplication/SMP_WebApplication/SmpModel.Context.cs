@@ -31,9 +31,9 @@ namespace SMP_WebApplication
         public virtual DbSet<Market_Participant> Market_Participant { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<WorkType> WorkTypes { get; set; }
         public virtual DbSet<UserAddress> UserAddresses { get; set; }
+        public virtual DbSet<UserProfile> UserProfiles { get; set; }
     }
 }
