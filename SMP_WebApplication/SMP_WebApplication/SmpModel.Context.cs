@@ -27,7 +27,6 @@ namespace SMP_WebApplication
     
         public virtual DbSet<Finance> Finances { get; set; }
         public virtual DbSet<Job> Jobs { get; set; }
-        public virtual DbSet<JobStatu> JobStatus { get; set; }
         public virtual DbSet<Market_Participant> Market_Participant { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
@@ -35,5 +34,6 @@ namespace SMP_WebApplication
         public virtual DbSet<WorkType> WorkTypes { get; set; }
         public virtual DbSet<UserAddress> UserAddresses { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        public virtual DbSet<JobStatu> JobStatus { get; set; }
     }
 }

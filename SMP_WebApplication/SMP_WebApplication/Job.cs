@@ -27,11 +27,11 @@ namespace SMP_WebApplication
         public long ProductID { get; set; }
     
         public virtual Finance Finance { get; set; }
-        public virtual JobStatu JobStatu { get; set; }
         public virtual Market_Participant Market_Participant { get; set; }
         public virtual Product Product { get; set; }
         public virtual WorkType WorkType { get; set; }
         public virtual UserProfile UserProfile { get; set; }
         public virtual UserProfile UserProfile1 { get; set; }
+        public virtual JobStatu JobStatu { get; set; }
     }
 }

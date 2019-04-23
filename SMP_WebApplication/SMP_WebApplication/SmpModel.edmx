@@ -340,20 +340,12 @@
           <Property Name="CompletedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ProductID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Finance" Relationship="Self.FK_Job_Finance" FromRole="Job" ToRole="Finance" />
-          <NavigationProperty Name="JobStatu" Relationship="Self.FK_Job_JobStatus" FromRole="Job" ToRole="JobStatus" />
           <NavigationProperty Name="Market_Participant" Relationship="Self.FK_Job_Market_Participant" FromRole="Job" ToRole="Market_Participant" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Job_Product" FromRole="Job" ToRole="Product" />
           <NavigationProperty Name="WorkType" Relationship="Self.FK_Job_WorkType" FromRole="Job" ToRole="WorkType" />
           <NavigationProperty Name="UserProfile" Relationship="SMPModel.FK_Job_UserProfile_CoordinatorID_" FromRole="Job" ToRole="UserProfile" />
           <NavigationProperty Name="UserProfile1" Relationship="SMPModel.FK_Job_UserProfile_CUSTOMER_" FromRole="Job" ToRole="UserProfile" />
-        </EntityType>
-        <EntityType Name="JobStatu">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Jobs" Relationship="Self.FK_Job_JobStatus" FromRole="JobStatus" ToRole="Job" />
+          <NavigationProperty Name="JobStatu" Relationship="SMPModel.FK_Job_JobStatus" FromRole="Job" ToRole="JobStatu" />
         </EntityType>
         <EntityType Name="Market_Participant">
           <Key>
@@ -431,18 +423,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Job_JobStatus">
-          <End Role="JobStatus" Type="Self.JobStatu" Multiplicity="1" />
-          <End Role="Job" Type="Self.Job" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobStatus">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Job">
-              <PropertyRef Name="JobStatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Job_Market_Participant">
           <End Role="Market_Participant" Type="Self.Market_Participant" Multiplicity="1" />
           <End Role="Job" Type="Self.Job" Multiplicity="*" />
@@ -506,7 +486,6 @@
         <EntityContainer Name="SMPEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Finances" EntityType="Self.Finance" />
           <EntitySet Name="Jobs" EntityType="Self.Job" />
-          <EntitySet Name="JobStatus" EntityType="Self.JobStatu" />
           <EntitySet Name="Market_Participant" EntityType="Self.Market_Participant" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
@@ -518,10 +497,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Job_Finance" Association="Self.FK_Job_Finance">
             <End Role="Finance" EntitySet="Finances" />
-            <End Role="Job" EntitySet="Jobs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Job_JobStatus" Association="Self.FK_Job_JobStatus">
-            <End Role="JobStatus" EntitySet="JobStatus" />
             <End Role="Job" EntitySet="Jobs" />
           </AssociationSet>
           <AssociationSet Name="FK_Job_Market_Participant" Association="Self.FK_Job_Market_Participant">
@@ -561,6 +536,11 @@
           <AssociationSet Name="FK_UserRoles_UserProfile" Association="SMPModel.FK_UserRoles_UserProfile">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <EntitySet Name="JobStatus" EntityType="SMPModel.JobStatu" />
+          <AssociationSet Name="FK_Job_JobStatus" Association="SMPModel.FK_Job_JobStatus">
+            <End Role="JobStatu" EntitySet="JobStatus" />
+            <End Role="Job" EntitySet="Jobs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserAddress">
@@ -641,6 +621,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="JobStatu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Jobs" Relationship="SMPModel.FK_Job_JobStatus" FromRole="JobStatu" ToRole="Job" />
+        </EntityType>
+        <Association Name="FK_Job_JobStatus">
+          <End Type="SMPModel.JobStatu" Role="JobStatu" Multiplicity="1" />
+          <End Type="SMPModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobStatu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="JobStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -671,14 +671,6 @@
                 <ScalarProperty Name="FinanceID" ColumnName="FinanceID" />
                 <ScalarProperty Name="CompletedBy" ColumnName="CompletedBy" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="JobStatus">
-            <EntityTypeMapping TypeName="SMPModel.JobStatu">
-              <MappingFragment StoreEntitySet="JobStatus">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -753,6 +745,14 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobStatus">
+            <EntityTypeMapping TypeName="SMPModel.JobStatu">
+              <MappingFragment StoreEntitySet="JobStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

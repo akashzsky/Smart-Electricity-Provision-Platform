@@ -123,9 +123,49 @@ namespace SMP_WebApplication.Controllers
             return View();
         }
         
+        [HttpGet]
         public ActionResult NewRequest()
         {
 
+            return View();
+        }
+        [HttpPost]
+        public ActionResult NewRequest(FormCollection frm)
+        {
+            string jobType = Request["Job"];
+
+            switch (jobType)
+            {
+                case "Install":
+                    return RedirectToAction("Install");
+                    
+                case "Exchange":
+                    return RedirectToAction("Exchange");
+                    
+                case "Remove":
+                    return RedirectToAction("Remove");
+                    
+                case "Re-Allocate":
+                    return RedirectToAction("ReAllocate");
+                    
+            }
+            return View();
+        }
+
+        public ActionResult Install()
+        {
+            return View();
+        }
+        public ActionResult Exchange()
+        {
+            return View();
+        }
+        public ActionResult Remove()
+        {
+            return View();
+        }
+        public ActionResult ReAllocate()
+        {
             return View();
         }
         public ActionResult Status()

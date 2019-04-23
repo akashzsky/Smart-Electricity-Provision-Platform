@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\Akash\final year project\SMP Platform\SMP_WebApplication\SMP_WebApplication\SmpModel.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\CollegeProject\SMP_WebApplication\SMP_WebApplication\SmpModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
