@@ -328,6 +328,7 @@
     <Content Include="Views\Customer\Recharge.cshtml" />
     <Content Include="Views\Customer\Signup.cshtml" />
     <Content Include="Views\Customer\Install.cshtml" />
+    <Content Include="Views\Customer\Exchange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

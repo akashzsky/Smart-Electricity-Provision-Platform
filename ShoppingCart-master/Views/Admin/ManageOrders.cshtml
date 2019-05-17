@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ShoppingKart.Models.Orders>
+
+@{
+    ViewBag.Title = "ManageOrders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>ManageOrders</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<form>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.OrderTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.processed)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderTotal)
+                </td>
+                <td>
+                    @if (item.processed == true)
+                    {
+                        <div class="form-group">
+
+
+                            <button type="submit" class="btn btn-outline-secondary" style="background-color:skyblue" name="processed" value="@item.OrderNo" disabled>Processed</button>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+
+
+                            <button type="submit" class="btn btn-outline-secondary" style="background-color:skyblue" name="processed" value="@item.OrderNo">Process</button>
+
+                        </div>
+                    }
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</form>

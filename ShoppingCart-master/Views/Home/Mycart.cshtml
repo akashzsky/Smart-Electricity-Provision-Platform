@@ -1,0 +1,129 @@
+﻿@model IEnumerable<ShoppingKart.Models.CartProd>
+
+@{
+    ViewBag.Title = "Mycart";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<div class="container" style="padding-top:4em">
+    <div class="row">
+        <div class="col-sm-8">
+            <form method="post">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4>Your Cart</h4>
+
+                    </div>
+                    @foreach (var item in Model)
+                    {
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-sm-4">
+
+                                    <img class="img-responsive img-thumbnail pull-left" style="margin-right:20px;margin-left:50px" src="~/Content/thumbnails/@item.Picture">
+
+                                </div>
+                                <div class="col-sm-6">
+
+                                    <strong>
+                                        @Html.DisplayFor(modelItem => item.ProductName)
+                                        <br />Price : @Html.DisplayFor(modelItem => item.Price)<br /><br />
+                                        
+                                       <span id='item-@item.Product_ID'>Qunatity : &nbsp; <button type="submit" class="btn btn-outline-secondary" style="background-color:#79e0bd" value="@item.Product_ID" name="Minus">-</button> @item.qty &nbsp; <button type="submit" class="btn btn-outline-secondary" style="background-color:#79e0bd" value="@item.Product_ID" name="Add">+</button></span>
+                                       
+                                    </strong>
+                                   
+
+                                </div>
+                                <div class="col-sm-2">
+                                    <div style="text-align:center">
+
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-outline-secondary" style="background-color:#eb5a5a" value="@item.Product_ID" name="Remove">Remove</button>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <hr style="border-color:lightskyblue" />
+                    }
+                    <div class="panel-footer">
+                        <font style="text-align:center;color:#f20d0d;font-size:medium">
+                            <p>
+                                <a href="Welcome">
+                                    Continue Shopping
+
+                                </a>
+                            </p>
+                        </font>
+
+                    </div>
+                </div>
+                </form>
+
+</div>
+        <div class="col-sm-4">
+            <div class="panel panel-warning" style="overflow-y:auto">
+                <div class="panel-heading">
+                    <h4>Price of Your Cart</h4>
+                </div>
+
+                <div class="panel-body" >
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div style="text-align:left">
+                                Total(@ViewBag.TotalItems Items) :
+                                <br /><br />
+                                DeliveryCharge :
+                                <br /><br /><br /><br />
+                                Amount Payable :
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div style="text-align:right">
+
+                                ₹@ViewBag.sum
+                                <br /><br />
+                                ₹@ViewBag.DeliveryCharge
+                                <br /><br />
+                                <hr />
+                                ₹@ViewBag.AmtPayable
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div style="background-color:#fcf8e3" class="panel-footer">
+                    <div style="text-align:center">
+                        <form method="post">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-secondary" style="background-color:skyblue" value="Checkout" name="checkout">Checkout</button>
+                                <br />
+                                <p class="danger">
+                                    @ViewBag.CheckoutMsg 
+                                </p>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

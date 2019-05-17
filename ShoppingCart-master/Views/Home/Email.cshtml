@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ShoppingKart.Models.CartProd>
+@using ShoppingKart.Models;
+@{
+    ViewBag.Title = "Mycart";
+
+    List<CartProd> lst = (List<CartProd>)(Session["email_data"]);
+    double total = Convert.ToDouble(Session["OrderTotal"]);
+    string time = Session["OrderTime"].ToString();
+    string add = (string)Session["Address"];
+}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+Congratulations!.<br />
+payment of ₹@total has been received for your orders. Your Order will be placed to your delivery address within 5-7 working days.
+<br /><br />Address : @add
+<br />
+
+<div class="container" style="padding-top:4em">
+    <div class="row">
+        <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4>Your Order Details</h4>
+
+                </div>
+                @for (int i=0;i<lst.Count;i++)
+                {
+                    <div class="panel-body">
+
+                       <p style="text-align:left">
+                           <strong>
+                               @lst[i].ProductName
+                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Price :  ₹@lst[i].Price
+                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Quantity :  @lst[i].qty
+
+                           </strong>
+                       </p>
+                          
+                               
+
+                       </div>
+                            
+
+                     <font color="lightskyblue">
+                         <p>--------------------------------------------------------</p>
+
+                     </font>
+                   // <hr style="border-color:lightskyblue" />
+                }
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+    </div>
+</div>

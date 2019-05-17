@@ -1,0 +1,129 @@
+﻿@using System.Data.SqlClient;
+@{ 
+    HttpCookie c = Request.Cookies["Username"];
+    ViewBag.val = null;
+    if (c != null)
+    {
+        ViewBag.user = c.Value;
+        ViewBag.val = "notnull"; //he is logged-in
+    }
+    else
+    {
+        ViewBag.user = "Sign In";
+    }
+
+    ViewBag.val2 =(ViewBag.val== null)?"Login":"#";
+    ViewBag.home = (ViewBag.val != null) ? "Welcome" : "Index";
+
+    //For getting qty number in cart
+
+    string Username = "";
+    int UserId = 0;
+    if (c != null)
+    {
+        Username = c.Value;
+
+    }
+    SqlConnection con = new SqlConnection(Settings.ConStr);
+    SqlCommand CmdUserId = new SqlCommand("select UserId from UserDetail where Username=@Username", con);
+    CmdUserId.Parameters.Add(new SqlParameter("Username", Username));
+    con.Open();
+
+    SqlDataReader r = CmdUserId.ExecuteReader();
+
+    while (r.Read())
+    {
+        UserId = (int)r["UserId"];
+    }
+    con.Close();
+    SqlCommand cmd = new SqlCommand("select Product.*,Usercart.Quantity from Product,Usercart,UserDetail where Usercart.UserId=@UserId AND Usercart.UserId=UserDetail.UserId AND Usercart.Product_ID=Product.Product_ID;", con);
+    cmd.Parameters.Add(new SqlParameter("UserId", UserId));
+    con.Open();
+
+    SqlDataReader r2 = cmd.ExecuteReader();
+    int cartQty = 0;
+    while (r2.Read())
+    {
+       cartQty += (int)r2["Quantity"];
+    }
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Shopping Cart</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header ">
+                <a href="#" class="navbar-brand img-responsive"><img class="img-responsive" src="~/Content/images/logo1.png" width="50"></a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+              @* @Html.ActionLink("Scodz", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            </div>
+            <div class="navbar-collapse collapse" id="mynav">
+               
+
+
+                    <ul class="nav navbar-nav">
+                        <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.home">Home</a></li>
+                        <li><a style="color:#fa900e;font-size:medium"  href="#">Customer Services</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (ViewBag.val != null)
+                        {
+                            <li><a style="color:#fa900e;font-size:medium"  href="~/home/mycart">Cart(@cartQty)</a></li>
+                        }
+                        else
+                        {
+                            <li><a style="color:#fa900e;font-size:medium"  href="~/home/login">Cart</a></li>
+                        }
+
+                        <li class="dropdown">
+                            <a style="color:#fa900e;font-size:medium"  href=@ViewBag.val2 class="dropdown-toggle" data-toggle="dropdown">Hello,@ViewBag.user<br />Account <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a style="color:#fa900e;font-size:medium"  href="#">Your Account</a></li>
+                                <li><a style="color:#fa900e;font-size:medium"  href="#">Your Orders</a></li>
+                                <li><a style="color:#fa900e;font-size:medium"  href="#">Your Membership</a></li>
+                                @if (ViewBag.val != null)
+                                {
+                                    <li><a style="color:#fa900e;font-size:medium"  href="Logout">Logout</a></li>
+                                }
+                                else
+                                {
+                                    <li><a style="color:#fa900e;font-size:medium"  href="Login">Login</a></li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <div class="container">
+            
+            <footer>
+         
+            </footer>
+        </div>
+      
+    </div>
+    
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>
