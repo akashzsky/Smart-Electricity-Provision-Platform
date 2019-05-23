@@ -1,0 +1,122 @@
+﻿@model IEnumerable<SMP_WebApplication.Models.DisplayJob>
+@{ 
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+<form method="post">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CusID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceiveDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoordinatorID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupplierID)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.CompletedDate)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.CompletedBy)
+            </th>*@
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CusID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceiveDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobStatus)
+                </td>
+                <td>
+                    @if (item.CoordinatorID == null)
+                    {
+
+                        <button type="submit" name="AssignCoordinator" value="@item.ID">Assign</button>
+
+                        if (ViewBag.Supplier == 0)
+                        {
+                            <br />
+                         <p>Not available</p> 
+                        }
+
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.CoordinatorID);
+                    }
+
+                    @*@Html.DisplayFor(modelItem => item.CoordinatorID)*@
+                </td>
+                <td>
+                    @if (item.SupplierID == null)
+                    {
+
+                        <button type="submit" name="AssignSupplier" value="@item.ID">Assign</button>
+                        if (ViewBag.Coord == 0)
+                        {
+                            <br />
+                            <p>Not available</p>
+                        }
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.SupplierID);
+                    }
+                    @*@Html.DisplayFor(modelItem => item.SupplierID)*@
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.CompletedDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletedBy)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>*@
+            </tr>
+        }
+
+    </table>
+
+</form>

@@ -19,19 +19,18 @@ namespace SMP_WebApplication
         public long WorkTypeID { get; set; }
         public System.DateTime ReceiveDate { get; set; }
         public long JobStatusID { get; set; }
-        public long CoordinatorID { get; set; }
-        public long SupplierID { get; set; }
-        public System.DateTime CompletedDate { get; set; }
-        public long FinanceID { get; set; }
+        public Nullable<long> CoordinatorID { get; set; }
+        public Nullable<long> SupplierID { get; set; }
+        public Nullable<System.DateTime> CompletedDate { get; set; }
+        public Nullable<long> FinanceID { get; set; }
         public string CompletedBy { get; set; }
-        public long ProductID { get; set; }
+        public Nullable<long> ProductID { get; set; }
     
         public virtual Finance Finance { get; set; }
-        public virtual Market_Participant Market_Participant { get; set; }
+        public virtual JobStatu JobStatu { get; set; }
         public virtual Product Product { get; set; }
         public virtual WorkType WorkType { get; set; }
         public virtual UserProfile UserProfile { get; set; }
         public virtual UserProfile UserProfile1 { get; set; }
-        public virtual JobStatu JobStatu { get; set; }
     }
 }

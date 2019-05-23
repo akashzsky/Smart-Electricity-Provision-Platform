@@ -29,5 +29,15 @@ namespace SMP_WebApplication.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<SMP_WebApplication.Job> Jobs { get; set; }
+
+        public System.Data.Entity.DbSet<SMP_WebApplication.Finance> Finances { get; set; }
+
+        public System.Data.Entity.DbSet<SMP_WebApplication.Product> Products { get; set; }
+
+        public System.Data.Entity.DbSet<SMP_WebApplication.WorkType> WorkTypes { get; set; }
+
+        public System.Data.Entity.DbSet<SMP_WebApplication.UserProfile> UserProfiles { get; set; }
     }
 }

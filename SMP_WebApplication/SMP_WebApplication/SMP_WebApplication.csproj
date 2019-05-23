@@ -214,12 +214,14 @@
     <Compile Include="JobStatu.cs">
       <DependentUpon>SmpModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Market_Participant.cs">
-      <DependentUpon>SmpModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\DisplayJob.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Power_Consumption.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>SmpModel.tt</DependentUpon>
     </Compile>
@@ -260,6 +262,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\Exchange.jpg" />
+    <Content Include="Content\Images\img1.jpg" />
+    <Content Include="Content\Images\img2.png" />
+    <Content Include="Content\Images\img3.jpg" />
+    <Content Include="Content\Images\img4.jpg" />
     <Content Include="Content\Images\Installation.jpg" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\Reallocation.png" />
@@ -276,6 +282,7 @@
     <Content Include="Databases\DB Model.xlsx" />
     <Content Include="Databases\SMP.bacpac" />
     <Content Include="Databases\CustomerPrototype.bacpac" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -329,11 +336,29 @@
     <Content Include="Views\Customer\Signup.cshtml" />
     <Content Include="Views\Customer\Install.cshtml" />
     <Content Include="Views\Customer\Exchange.cshtml" />
+    <Content Include="Views\Customer\Checkout.cshtml" />
+    <Content Include="Views\Customer\Complete.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Welcome.cshtml" />
+    <Content Include="Views\Admin\Signup.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Admin\Customers.cshtml" />
+    <Content Include="Views\Admin\Coordinators.cshtml" />
+    <Content Include="Views\Admin\Suppliers.cshtml" />
+    <Content Include="Views\Coordinator\Index.cshtml" />
+    <Content Include="Views\Coordinator\Login.cshtml" />
+    <Content Include="Views\Coordinator\Signup.cshtml" />
+    <Content Include="Views\Coordinator\Welcome.cshtml" />
+    <Content Include="Views\Shared\_CoordinatorLayout.cshtml" />
+    <Content Include="Views\Customer\Remove.cshtml" />
+    <Content Include="Views\Customer\Email.cshtml" />
+    <Content Include="Views\Admin\UserProfile.cshtml" />
+    <Content Include="Views\Coordinator\UserProfile.cshtml" />
+    <Content Include="Views\Shared\_HomeLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
-    <Folder Include="Views\Coordinator\" />
     <Folder Include="Views\Supplier\" />
   </ItemGroup>
   <ItemGroup>

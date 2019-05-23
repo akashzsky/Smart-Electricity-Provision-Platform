@@ -1,0 +1,77 @@
+﻿@model IEnumerable<SMP_WebApplication.Models.DisplayJob>
+@{ 
+    Layout = "~/Views/Shared/_CoordinatorLayout.cshtml";
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<form method="post">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CusID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceiveDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupplierID)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CusID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceiveDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobStatus)
+                </td>
+                
+                <td>
+                    @if (item.SupplierID == null)
+                    {
+
+                        <p>Not-Assigned</p>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.SupplierID);
+                    }
+                    @*@Html.DisplayFor(modelItem => item.SupplierID)*@
+                </td>
+                <td>
+                    <button type="submit" name="Complete" value="@item.ID">Complete</button>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</form>

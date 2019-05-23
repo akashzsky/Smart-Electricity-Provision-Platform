@@ -4,15 +4,16 @@
     ViewBag.Title = "UserProfile";
 }
 
-<h2>UserProfile</h2>
+<h2>Your Profile</h2>
 
 <div>
-    <h4>UserProfile</h4>
+   
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.UserName)
         </dt>
+        <dt>
 
         <dd>
             @Html.DisplayFor(model => model.UserName)
@@ -61,6 +62,16 @@
 
 
     </dl>
+</div>
+
+
+<br />
+<br />
+<div class="container">
+    <div class="well">
+        @ViewBag.Usage
+    </div>
+
 </div>
 @*<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |

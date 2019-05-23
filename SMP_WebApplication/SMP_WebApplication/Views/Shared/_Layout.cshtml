@@ -12,14 +12,14 @@
     }
 
     ViewBag.val2 = (ViewBag.val == null) ? "Login" : "#";
-    ViewBag.val3 = (c != null) ? "Helpdesk" : "#";
-    ViewBag.val4 = (c != null) ? "NewRequest" : "#";
-    ViewBag.val5 = (c != null) ? "Status" : "#";
-    ViewBag.val6 = (c != null) ? "Billing" : "#";
-    ViewBag.val7 = (c != null) ? "Recharge" : "#";
-    ViewBag.val1 = (c != null) ? "Welcome" : "Login";
-    ViewBag.UP = (c != null) ? "UserProfile" : "Login";
-    ViewBag.home = (c != null) ? "welcome" : "";
+    ViewBag.val3 = (c != null) ? "customer/Helpdesk" : "#";
+    ViewBag.val4 = (c != null) ? "Customer/NewRequest" : "#";
+    ViewBag.val5 = (c != null) ? "Customer/Status" : "#";
+    ViewBag.val6 = (c != null) ? "Customer/Billing" : "#";
+    ViewBag.val7 = (c != null) ? "Customer/Recharge" : "#";
+    ViewBag.val1 = (c != null) ? "Customer/Welcome" : "Login";
+    ViewBag.UP = (c != null) ? "Customer/UserProfile" : "Login";
+    ViewBag.home = (c != null) ? "Customer/welcome" :"home/index" ;
 
 
 
@@ -48,8 +48,9 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar  navbar-dark bg-primary navbar-fixed-top">
         <div class="container">
             <div class="navbar-header ">
                 <a href="#" class="navbar-brand img-responsive"><img class="img-responsive" src="~/Content/Images/logo.png" width="50"></a>
@@ -65,20 +66,30 @@
 
 
                 <ul class="nav navbar-nav">
-                    <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.home">Home</a></li>
-                    <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val3">Help Desk</a></li>
-                    <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val4">New Request</a></li>
-                    <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val5">Status</a></li>
-                    <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val6">Billing</a></li>
-                    <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val7">Recharge</a></li>
+                    @if (ViewBag.val == null)
+                    {
+                        <li><a style="color:#fff;font-size:medium" href="~/@ViewBag.home">Home</a></li>
+                        <li><a style="color:#fff;font-size:medium" href="~/@ViewBag.val3">Contact US</a></li>
+                    }
+                    else
+                    {
+                        <li><a style="color:#fff;font-size:medium" href="~/@ViewBag.home">Home</a></li>
+                       
+                        <li><a style="color:#fff;font-size:medium" href="~/@ViewBag.val4">Apply</a></li>
+                        <li><a style="color:#fff;font-size:medium" href="~/@ViewBag.val5">Status</a></li>
+                        <li><a style="color:#fff;font-size:medium" href="~/@ViewBag.val3">Contact US</a></li>
+                    }
+                    
+                    @*<li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val6">Billing</a></li>
+                    <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val7">Recharge</a></li>*@
                     
                 </ul>
-                @if (ViewBag.index != null)
+                @if (ViewBag.val == null)
                 {
                     <ul class="navbar-nav navbar-right">
                         <li class="nav-item">
                             <br />
-                            <a class="nav-link" style="color:#fa900e;font-size:medium;margin-top:.5rem" href="customer/login"> Hello,@ViewBag.user</a>
+                            <a class="nav-link" style="color:#fff;font-size:medium;margin-top:.5rem" href="~/customer/login"> Hello,@ViewBag.user</a>
                             
                         </li>
                     </ul>
@@ -92,20 +103,20 @@
                 <ul class="nav navbar-nav navbar-right">
 
 
-                    <li class="dropdown">
-                        <a style="color:#fa900e;font-size:medium;" href=@ViewBag.val2 class="dropdown-toggle" data-toggle="dropdown">Hello,@ViewBag.user<br />Account <span class="caret"></span></a>
+                    <li class="dropdown" @*style="background-color: "*@>
+                        <a style="color:#fff;font-size:medium;" class="dropdown-toggle" data-toggle="dropdown">Hello,@ViewBag.user &nbsp;<span class="caret"></span></a>
 
                         <ul class="dropdown-menu">
-                            <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.UP">Your Profile</a></li>
-                            <li><a style="color:#fa900e;font-size:medium" href="#">Add Address</a></li>
-                            <li><a style="color:#fa900e;font-size:medium" href="#">Your Product</a></li>
+                            <li><a style="color:#3058b3;font-size:medium" href="~/@ViewBag.UP">Your Profile</a></li>
+                            @*<li><a style="color:#3058b3;font-size:medium" href="#">View Address</a></li>*@
+                            @*<li><a style="color:#fa900e;font-size:medium" href="#">Your Product</a></li>*@
                             @if (ViewBag.val != null)
                             {
-                                <li><a style="color:#fa900e;font-size:medium" href="Logout">Logout</a></li>
+                                <li><a style="color:#3058b3;font-size:medium" href="~/Customer/Logout">Logout</a></li>
                             }
                             else
                             {
-                                <li><a style="color:#fa900e;font-size:medium" href="~/Customer/login">Login</a></li>
+                                <li><a style="color:#3058b3;font-size:medium" href="~/Customer/login">Login</a></li>
                             }
                         </ul>
 

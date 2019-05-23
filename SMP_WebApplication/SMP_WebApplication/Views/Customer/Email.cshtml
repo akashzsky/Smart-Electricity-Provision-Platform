@@ -1,0 +1,36 @@
+﻿@{ 
+    HttpCookie c = Request.Cookies["Username"];
+    string username = null;
+    long id = 0;
+    ViewBag.user = "";
+    UserAddress ShowAddress = new UserAddress();
+    ViewBag.Status_Result = 0;
+    // Retrieving UserId from the username and also fetching the user address.
+
+    SMPEntities context = new SMPEntities();
+    if (c != null)
+    {
+        username = c.Value;
+        var user = context.UserProfiles.FirstOrDefault(x => x.Email == username);
+        id = user.ID;
+        ShowAddress = context.UserAddresses.FirstOrDefault(x => x.UserID == id);
+        ViewBag.user = user.FirstName;
+    }
+
+}
+
+<span>
+    Hello @ViewBag.user,<br />
+    <br />
+    We are glad to inform you that your order has been received. You can check the status<br />
+    of your request by signing into the website.
+    
+    <br /> <br /><br />
+
+    Thanks for placing the order!!
+
+    <br />
+    <br />
+    <br>
+    Team SMPIndia.
+</span>

@@ -15,8 +15,8 @@ namespace SMP_WebApplication
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                url: "{controller}/{action}/{myid}",
+                defaults: new { controller = "Home", action = "Index", myid = UrlParameter.Optional }
             );
         }
     }

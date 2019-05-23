@@ -21,6 +21,7 @@ namespace SMP_WebApplication
             this.Jobs1 = new HashSet<Job>();
             this.UserAddresses = new HashSet<UserAddress>();
             this.UserRoles = new HashSet<UserRole>();
+            this.Power_Consumption = new HashSet<Power_Consumption>();
         }
     
         public long ID { get; set; }
@@ -31,6 +32,8 @@ namespace SMP_WebApplication
         public string LastName { get; set; }
         public long PhoneNo { get; set; }
         public System.DateTime DOB { get; set; }
+        public Nullable<long> RoleId { get; set; }
+        public Nullable<int> Assigned { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Job> Jobs { get; set; }
@@ -40,5 +43,7 @@ namespace SMP_WebApplication
         public virtual ICollection<UserAddress> UserAddresses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Power_Consumption> Power_Consumption { get; set; }
     }
 }
