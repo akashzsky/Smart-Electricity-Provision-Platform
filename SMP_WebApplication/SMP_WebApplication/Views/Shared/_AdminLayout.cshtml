@@ -1,0 +1,144 @@
+﻿@{
+    SMPEntities context = new SMPEntities();
+    HttpCookie c = Request.Cookies["Admin"];
+    ViewBag.val = null;
+    if (c != null)
+    {
+        ViewBag.val = "notnull"; //he is logged-in
+    }
+    else
+    {
+        ViewBag.user = "Sign In";
+    }
+
+    ViewBag.val2 = (ViewBag.val == null) ? "admin/Login" : "#";
+    ViewBag.val3 = (c != null) ? "admin/Customers" : "#";
+    ViewBag.val4 = (c != null) ? "admin/Coordinators" : "#";
+    //ViewBag.val5 = (c != null) ? "UnAssignedCoordinators" : "#";
+    ViewBag.val6 = (c != null) ? "admin/Suppliers" : "#";
+    //  ViewBag.val7 = (c != null) ? "UnAssigned Supplier" : "#";
+    ViewBag.val1 = (c != null) ? "Welcome" : "Login";
+    ViewBag.UP = (c != null) ? "admin/UserProfile" : "Login";
+    ViewBag.home = (c != null) ? "admin/welcome" : "home/index";
+
+
+
+    //For getting qty number in cart
+
+    string Username = "";
+    if (c != null)
+    {
+        Username = c.Value;
+    }
+
+    var user = context.UserProfiles.FirstOrDefault(x => x.Email == Username);
+    if (user != null)
+    {
+        ViewBag.user = user.FirstName;
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SMP Platform</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header ">
+                <a href="#" class="navbar-brand img-responsive"><img class="img-responsive" src="~/Content/Images/logo.png" width="50"></a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="navbar-collapse collapse" id="mynav">
+
+                @if (ViewBag.val == null)
+                {
+                    <ul class="nav navbar-nav">
+                        <li><a style="color:#fa900e;font-size:medium" href="~/@ViewBag.home">Home</a></li>
+                        </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav">
+                        <li><a style="color:#fa900e;font-size:medium" href="~/@ViewBag.home">Home</a></li>
+                        <li><a style="color:#fa900e;font-size:medium" href="~/@ViewBag.val3">Customer List</a></li>
+                        <li><a style="color:#fa900e;font-size:medium" href="~/@ViewBag.val4">Coordinators</a></li>
+                        <li><a style="color:#fa900e;font-size:medium" href="~/@ViewBag.val6">Supplier</a></li>
+                        @*<li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val5">Un-Assigned Coordinators</a></li>
+                            <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val6">Assigned Supplier</a></li>
+                            <li><a style="color:#fa900e;font-size:medium" href="@ViewBag.val7">Un-Assigned Suppliers</a></li>*@
+
+                    </ul>
+                }
+
+                      
+                        @if (ViewBag.val == null)
+                        {
+                            <ul class="navbar-nav navbar-right">
+                                <li class="nav-item">
+                                    <br />
+                                    <a class="nav-link" style="color:#fa900e;font-size:medium;margin-top:.5rem" href="~/Admin/login"> Hello,@ViewBag.user</a>
+
+                                </li>
+                            </ul>
+
+
+
+
+                        }
+                        else
+                        {
+                            <ul class="nav navbar-nav navbar-right">
+
+
+                                <li class="dropdown">
+                                    <a style="color:#fa900e;font-size:medium;" href=@ViewBag.val2 class="dropdown-toggle" data-toggle="dropdown">Hello,@ViewBag.user<br />Account <span class="caret"></span></a>
+
+                                    <ul class="dropdown-menu">
+                                        <li><a style="color:#fa900e;font-size:medium" href="~/@ViewBag.UP">Your Profile</a></li>
+
+                                        @if (ViewBag.val != null)
+                                        {
+                                            <li><a style="color:#fa900e;font-size:medium" href="Logout">Logout</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a style="color:#fa900e;font-size:medium" href="~/Admin/login">Login</a></li>
+                                        }
+                                    </ul>
+
+
+                                </li>
+
+                            </ul>
+                        }
+
+</div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <div class="container">
+
+            <footer></footer>
+        </div>
+
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

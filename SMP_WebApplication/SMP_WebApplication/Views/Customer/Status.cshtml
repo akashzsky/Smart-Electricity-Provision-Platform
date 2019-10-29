@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Status";
+}
+
+<h2>Status</h2>
+<div class="jumbotron">
+    @if (ViewBag.Status_Result == 1)
+    {
+        <span>
+            First Make a New Request!
+        </span>
+    }
+    else
+    {
+        <span>
+            Current Status : @ViewBag.CurrStatus;
+        </span>
+    }
+
+
+</div>
+
+

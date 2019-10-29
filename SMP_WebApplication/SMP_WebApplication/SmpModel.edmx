@@ -1,0 +1,746 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SMPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Finance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkTypeID" Type="bigint" Nullable="false" />
+          <Property Name="Cost" Type="float" Nullable="false" />
+          <Property Name="Sale" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CusID" Type="bigint" Nullable="false" />
+          <Property Name="WorkTypeID" Type="bigint" Nullable="false" />
+          <Property Name="ReceiveDate" Type="datetime" Nullable="false" />
+          <Property Name="JobStatusID" Type="bigint" Nullable="false" />
+          <Property Name="CoordinatorID" Type="bigint" />
+          <Property Name="SupplierID" Type="bigint" />
+          <Property Name="CompletedDate" Type="datetime" />
+          <Property Name="FinanceID" Type="bigint" />
+          <Property Name="CompletedBy" Type="varchar(max)" />
+          <Property Name="ProductID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="JobStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Power_Consumption">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustID" Type="bigint" Nullable="false" />
+          <Property Name="Usage" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="Code" Type="varchar(max)" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="Model" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserAddress">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="House" Type="varchar(max)" Nullable="false" />
+          <Property Name="Street" Type="varchar(max)" Nullable="false" />
+          <Property Name="Area" Type="varchar(max)" Nullable="false" />
+          <Property Name="State" Type="varchar(max)" Nullable="false" />
+          <Property Name="Pin" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar(max)" Nullable="false" />
+          <Property Name="Email" Type="varchar(max)" Nullable="false" />
+          <Property Name="Password" Type="varchar(max)" Nullable="false" />
+          <Property Name="FirstName" Type="varchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="varchar(max)" />
+          <Property Name="PhoneNo" Type="bigint" Nullable="false" />
+          <Property Name="DOB" Type="datetime" Nullable="false" />
+          <Property Name="RoleId" Type="bigint" />
+          <Property Name="Assigned" Type="int" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="RoleID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Finance_WorkType">
+          <End Role="WorkType" Type="Self.WorkType" Multiplicity="1" />
+          <End Role="Finance" Type="Self.Finance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Finance">
+              <PropertyRef Name="WorkTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_Finance">
+          <End Role="Finance" Type="Self.Finance" Multiplicity="0..1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Finance">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="FinanceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_JobStatus">
+          <End Role="JobStatus" Type="Self.JobStatus" Multiplicity="1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="JobStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_UserProfile(CoordinatorID)">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CoordinatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_UserProfile(CUSTOMER)">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_WorkType">
+          <End Role="WorkType" Type="Self.WorkType" Multiplicity="1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="WorkTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Power_Consumption_UserProfile">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="Power_Consumption" Type="Self.Power_Consumption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Power_Consumption">
+              <PropertyRef Name="CustID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAddress_UserProfile">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_Roles">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_UserProfile">
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SMPModelStoreContainer">
+          <EntitySet Name="Finance" EntityType="Self.Finance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job" EntityType="Self.Job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JobStatus" EntityType="Self.JobStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Power_Consumption" EntityType="Self.Power_Consumption" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAddress" EntityType="Self.UserAddress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkType" EntityType="Self.WorkType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Finance_WorkType" Association="Self.FK_Finance_WorkType">
+            <End Role="WorkType" EntitySet="WorkType" />
+            <End Role="Finance" EntitySet="Finance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_Finance" Association="Self.FK_Job_Finance">
+            <End Role="Finance" EntitySet="Finance" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_JobStatus" Association="Self.FK_Job_JobStatus">
+            <End Role="JobStatus" EntitySet="JobStatus" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_Product" Association="Self.FK_Job_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_UserProfile(CoordinatorID)" Association="Self.FK_Job_UserProfile(CoordinatorID)">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_UserProfile(CUSTOMER)" Association="Self.FK_Job_UserProfile(CUSTOMER)">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_WorkType" Association="Self.FK_Job_WorkType">
+            <End Role="WorkType" EntitySet="WorkType" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Power_Consumption_UserProfile" Association="Self.FK_Power_Consumption_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="Power_Consumption" EntitySet="Power_Consumption" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAddress_UserProfile" Association="Self.FK_UserAddress_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Roles" Association="Self.FK_UserRoles_Roles">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_UserProfile" Association="Self.FK_UserRoles_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SMPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Finance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkTypeID" Type="Int64" Nullable="false" />
+          <Property Name="Cost" Type="Double" Nullable="false" />
+          <Property Name="Sale" Type="Double" Nullable="false" />
+          <NavigationProperty Name="WorkType" Relationship="SMPModel.FK_Finance_WorkType" FromRole="Finance" ToRole="WorkType" />
+          <NavigationProperty Name="Jobs" Relationship="SMPModel.FK_Job_Finance" FromRole="Finance" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Model" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Jobs" Relationship="SMPModel.FK_Job_Product" FromRole="Product" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.FK_UserRoles_Roles" FromRole="Role" ToRole="UserRoles" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="RoleID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_UserRoles_Roles" FromRole="UserRoles" ToRole="Role" />
+          <NavigationProperty Name="UserProfile" Relationship="SMPModel.FK_UserRoles_UserProfile" FromRole="UserRole" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_UserRoles_Roles">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SMPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Finances" EntityType="Self.Finance" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <AssociationSet Name="FK_UserRoles_Roles" Association="Self.FK_UserRoles_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <EntitySet Name="Jobs" EntityType="SMPModel.Job" />
+          <EntitySet Name="JobStatus" EntityType="SMPModel.JobStatu" />
+          <EntitySet Name="UserAddresses" EntityType="SMPModel.UserAddress" />
+          <EntitySet Name="WorkTypes" EntityType="SMPModel.WorkType" />
+          <AssociationSet Name="FK_Finance_WorkType" Association="SMPModel.FK_Finance_WorkType">
+            <End Role="WorkType" EntitySet="WorkTypes" />
+            <End Role="Finance" EntitySet="Finances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_Finance" Association="SMPModel.FK_Job_Finance">
+            <End Role="Finance" EntitySet="Finances" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_JobStatus" Association="SMPModel.FK_Job_JobStatus">
+            <End Role="JobStatu" EntitySet="JobStatus" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_Product" Association="SMPModel.FK_Job_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_WorkType" Association="SMPModel.FK_Job_WorkType">
+            <End Role="WorkType" EntitySet="WorkTypes" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <EntitySet Name="UserProfiles" EntityType="SMPModel.UserProfile" />
+          <AssociationSet Name="FK_Job_UserProfile_CoordinatorID_" Association="SMPModel.FK_Job_UserProfile_CoordinatorID_">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Job_UserProfile_CUSTOMER_" Association="SMPModel.FK_Job_UserProfile_CUSTOMER_">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAddress_UserProfile" Association="SMPModel.FK_UserAddress_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="UserAddress" EntitySet="UserAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_UserProfile" Association="SMPModel.FK_UserRoles_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <EntitySet Name="Power_Consumption" EntityType="SMPModel.Power_Consumption" />
+          <AssociationSet Name="FK_Power_Consumption_UserProfile" Association="SMPModel.FK_Power_Consumption_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Power_Consumption" EntitySet="Power_Consumption" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CusID" Type="Int64" Nullable="false" />
+          <Property Name="WorkTypeID" Type="Int64" Nullable="false" />
+          <Property Name="ReceiveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="JobStatusID" Type="Int64" Nullable="false" />
+          <Property Name="CoordinatorID" Type="Int64" />
+          <Property Name="SupplierID" Type="Int64" />
+          <Property Name="CompletedDate" Type="DateTime" Precision="3" />
+          <Property Name="FinanceID" Type="Int64" />
+          <Property Name="CompletedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProductID" Type="Int64" />
+          <NavigationProperty Name="Finance" Relationship="SMPModel.FK_Job_Finance" FromRole="Job" ToRole="Finance" />
+          <NavigationProperty Name="JobStatu" Relationship="SMPModel.FK_Job_JobStatus" FromRole="Job" ToRole="JobStatu" />
+          <NavigationProperty Name="Product" Relationship="SMPModel.FK_Job_Product" FromRole="Job" ToRole="Product" />
+          <NavigationProperty Name="WorkType" Relationship="SMPModel.FK_Job_WorkType" FromRole="Job" ToRole="WorkType" />
+          <NavigationProperty Name="UserProfile" Relationship="SMPModel.FK_Job_UserProfile_CoordinatorID_" FromRole="Job" ToRole="UserProfile" />
+          <NavigationProperty Name="UserProfile1" Relationship="SMPModel.FK_Job_UserProfile_CUSTOMER_" FromRole="Job" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="JobStatu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Jobs" Relationship="SMPModel.FK_Job_JobStatus" FromRole="JobStatu" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="UserAddress">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="House" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Area" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Pin" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="UserProfile" Relationship="SMPModel.FK_UserAddress_UserProfile" FromRole="UserAddress" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="WorkType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Finances" Relationship="SMPModel.FK_Finance_WorkType" FromRole="WorkType" ToRole="Finance" />
+          <NavigationProperty Name="Jobs" Relationship="SMPModel.FK_Job_WorkType" FromRole="WorkType" ToRole="Job" />
+        </EntityType>
+        <Association Name="FK_Finance_WorkType">
+          <End Type="SMPModel.WorkType" Role="WorkType" Multiplicity="1" />
+          <End Type="SMPModel.Finance" Role="Finance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Finance">
+              <PropertyRef Name="WorkTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_Finance">
+          <End Type="SMPModel.Finance" Role="Finance" Multiplicity="0..1" />
+          <End Type="SMPModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Finance">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="FinanceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_JobStatus">
+          <End Type="SMPModel.JobStatu" Role="JobStatu" Multiplicity="1" />
+          <End Type="SMPModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobStatu">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="JobStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_Product">
+          <End Type="SMPModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="SMPModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_WorkType">
+          <End Type="SMPModel.WorkType" Role="WorkType" Multiplicity="1" />
+          <End Type="SMPModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="WorkTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="Int64" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RoleId" Type="Int64" />
+          <Property Name="Assigned" Type="Int32" />
+          <NavigationProperty Name="Jobs" Relationship="SMPModel.FK_Job_UserProfile_CoordinatorID_" FromRole="UserProfile" ToRole="Job" />
+          <NavigationProperty Name="Jobs1" Relationship="SMPModel.FK_Job_UserProfile_CUSTOMER_" FromRole="UserProfile" ToRole="Job" />
+          <NavigationProperty Name="UserAddresses" Relationship="SMPModel.FK_UserAddress_UserProfile" FromRole="UserProfile" ToRole="UserAddress" />
+          <NavigationProperty Name="UserRoles" Relationship="SMPModel.FK_UserRoles_UserProfile" FromRole="UserProfile" ToRole="UserRole" />
+          <NavigationProperty Name="Power_Consumption" Relationship="SMPModel.FK_Power_Consumption_UserProfile" FromRole="UserProfile" ToRole="Power_Consumption" />
+        </EntityType>
+        <Association Name="FK_Job_UserProfile_CoordinatorID_">
+          <End Type="SMPModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="SMPModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CoordinatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Job_UserProfile_CUSTOMER_">
+          <End Type="SMPModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="SMPModel.Job" Role="Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="CusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAddress_UserProfile">
+          <End Type="SMPModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="SMPModel.UserAddress" Role="UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_UserProfile">
+          <End Type="SMPModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="SMPModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Power_Consumption">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustID" Type="Int64" Nullable="false" />
+          <Property Name="Usage" Type="Int64" />
+          <NavigationProperty Name="UserProfile" Relationship="SMPModel.FK_Power_Consumption_UserProfile" FromRole="Power_Consumption" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_Power_Consumption_UserProfile">
+          <End Type="SMPModel.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="SMPModel.Power_Consumption" Role="Power_Consumption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Power_Consumption">
+              <PropertyRef Name="CustID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SMPModelStoreContainer" CdmEntityContainer="SMPEntities">
+          <EntitySetMapping Name="Finances">
+            <EntityTypeMapping TypeName="SMPModel.Finance">
+              <MappingFragment StoreEntitySet="Finance">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="WorkTypeID" ColumnName="WorkTypeID" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Sale" ColumnName="Sale" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="SMPModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="SMPModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="SMPModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="SMPModel.Job">
+              <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="CompletedBy" ColumnName="CompletedBy" />
+                <ScalarProperty Name="FinanceID" ColumnName="FinanceID" />
+                <ScalarProperty Name="CompletedDate" ColumnName="CompletedDate" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="CoordinatorID" ColumnName="CoordinatorID" />
+                <ScalarProperty Name="JobStatusID" ColumnName="JobStatusID" />
+                <ScalarProperty Name="ReceiveDate" ColumnName="ReceiveDate" />
+                <ScalarProperty Name="WorkTypeID" ColumnName="WorkTypeID" />
+                <ScalarProperty Name="CusID" ColumnName="CusID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobStatus">
+            <EntityTypeMapping TypeName="SMPModel.JobStatu">
+              <MappingFragment StoreEntitySet="JobStatus">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAddresses">
+            <EntityTypeMapping TypeName="SMPModel.UserAddress">
+              <MappingFragment StoreEntitySet="UserAddress">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Pin" ColumnName="Pin" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="House" ColumnName="House" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkTypes">
+            <EntityTypeMapping TypeName="SMPModel.WorkType">
+              <MappingFragment StoreEntitySet="WorkType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="SMPModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="Assigned" ColumnName="Assigned" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Power_Consumption">
+            <EntityTypeMapping TypeName="SMPModel.Power_Consumption">
+              <MappingFragment StoreEntitySet="Power_Consumption">
+                <ScalarProperty Name="Usage" ColumnName="Usage" />
+                <ScalarProperty Name="CustID" ColumnName="CustID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -80,6 +80,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -195,21 +197,79 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CoordinatorController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Finance.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Job.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobStatu.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\DisplayJob.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Power_Consumption.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SmpModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmpModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SmpModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SmpModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SmpModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="UserAddress.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserProfile.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRole.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkType.cs">
+      <DependentUpon>SmpModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Exchange.jpg" />
+    <Content Include="Content\Images\img1.jpg" />
+    <Content Include="Content\Images\img2.png" />
+    <Content Include="Content\Images\img3.jpg" />
+    <Content Include="Content\Images\img4.jpg" />
+    <Content Include="Content\Images\Installation.jpg" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\Reallocation.png" />
+    <Content Include="Content\Images\Remove.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -219,6 +279,10 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Databases\DB Model.xlsx" />
+    <Content Include="Databases\SMP.bacpac" />
+    <Content Include="Databases\CustomerPrototype.bacpac" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -231,6 +295,16 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="SmpModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SmpModel.edmx</DependentUpon>
+      <LastGenOutput>SmpModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="SmpModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SmpModel.edmx</DependentUpon>
+      <LastGenOutput>SmpModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -240,34 +314,52 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <EntityDeploy Include="SmpModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SmpModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="SmpModel.edmx.diagram">
+      <DependentUpon>SmpModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Views\Customer\Login.cshtml" />
+    <Content Include="Views\Customer\Welcome.cshtml" />
+    <Content Include="Views\Customer\Helpdesk.cshtml" />
+    <Content Include="Views\Customer\UserProfile.cshtml" />
+    <Content Include="Views\Customer\NewRequest.cshtml" />
+    <Content Include="Views\Customer\Status.cshtml" />
+    <Content Include="Views\Customer\Billing.cshtml" />
+    <Content Include="Views\Customer\Recharge.cshtml" />
+    <Content Include="Views\Customer\Signup.cshtml" />
+    <Content Include="Views\Customer\Install.cshtml" />
+    <Content Include="Views\Customer\Exchange.cshtml" />
+    <Content Include="Views\Customer\Checkout.cshtml" />
+    <Content Include="Views\Customer\Complete.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Welcome.cshtml" />
+    <Content Include="Views\Admin\Signup.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Admin\Customers.cshtml" />
+    <Content Include="Views\Admin\Coordinators.cshtml" />
+    <Content Include="Views\Admin\Suppliers.cshtml" />
+    <Content Include="Views\Coordinator\Index.cshtml" />
+    <Content Include="Views\Coordinator\Login.cshtml" />
+    <Content Include="Views\Coordinator\Signup.cshtml" />
+    <Content Include="Views\Coordinator\Welcome.cshtml" />
+    <Content Include="Views\Shared\_CoordinatorLayout.cshtml" />
+    <Content Include="Views\Customer\Remove.cshtml" />
+    <Content Include="Views\Customer\Email.cshtml" />
+    <Content Include="Views\Admin\UserProfile.cshtml" />
+    <Content Include="Views\Coordinator\UserProfile.cshtml" />
+    <Content Include="Views\Shared\_HomeLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Supplier\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -276,6 +368,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

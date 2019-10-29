@@ -1,0 +1,42 @@
+
+Flow chart for Customer Profile
+``````````````````````````````````
+
+1.) Home page -> New Job Request page -> Job type selection page -> Customer details page -> Review page.
+
+2.) home page -> help desk page
+
+3.) home page -> check status page
+
+4.) home page -> Billing Report page.
+
+5.) home page -> Recharge page -> Post paid Recharge page -> Charge Incurred Detail page -> Payment page.
+			|-------> Prepaid recharge page	  -> Plan selection page -> payment page.
+
+6.) home page -> Product page.
+
+
+Flow chart for Admin Profile
+``````````````````````````````````				
+1.) home page -> Customer Request List -> approve request page -> Supplier List page -> Coordinator List page -> Review/Edit mapping page  
+
+2.) home page -> Customer Bill status page -> RemainderPage (for postpaid)
+
+3.) home page -> Recharge plan list -> UpdateRecharge Plan page
+
+4.) home page -> product page -> update Product information page 
+
+5.) home page -> customer list page 
+
+6.) home page -> coordinator list page 
+
+7.) home page -> supplier list page 
+
+Flow chart for Coordinator Profile
+``````````````````````````````````
+				
+1.) home page -> List of mapped Requests -> emailing area engineer the detail of customer -> emailing customer the details of area engineer.
+
+2.) home page -> List of mapped Request -> Cancel/Reopen Job
+
+2.)

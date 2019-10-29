@@ -1,0 +1,188 @@
+﻿@model IEnumerable<SMP_WebApplication.UserProfile>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br /> <br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse1"> Un Assigned Suppliers</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                    <form>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UserName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Email)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.FirstName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.LastName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.PhoneNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DOB)
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                                @foreach (var item in Model)
+                                {
+
+                                    if ( item.Assigned == 0)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.UserName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Email)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FirstName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LastName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PhoneNo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DOB.Day)/@Html.DisplayFor(modelItem => item.DOB.Month)/@Html.DisplayFor(modelItem => item.DOB.Year)
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                }
+
+                            </table>
+
+                        </div>
+
+                        <div class="panel-footer">
+
+                            @*<button class="btn btn-danger" type="submit" name="PlaceOrder" data-toggle="collapse" data-target="#collapse2">Place Order</button>
+                                <br /><p class="danger">@ViewBag.SelectError</p>*@
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+
+        </div>
+
+    </div>
+
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse2"> Assigned Suppliers</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <form>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.UserName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Email)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.FirstName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.LastName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.PhoneNo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.DOB)
+                                    </th>
+
+                                    <th></th>
+                                </tr>
+                                @foreach (var item in Model)
+                                {
+
+                                    if (item.Assigned == 1)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.UserName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Email)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FirstName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LastName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PhoneNo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DOB.Day)/@Html.DisplayFor(modelItem => item.DOB.Month)/@Html.DisplayFor(modelItem => item.DOB.Year)
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                }
+
+                            </table>
+
+                        </div>
+
+                        <div class="panel-footer">
+
+                            @*<button class="btn btn-danger" type="submit" name="PlaceOrder" data-toggle="collapse" data-target="#collapse2">Place Order</button>
+                                <br /><p class="danger">@ViewBag.SelectError</p>*@
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+
+        </div>
+
+    </div>
+
+</div>
+
